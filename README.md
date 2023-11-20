@@ -1,6 +1,6 @@
 # MUDA App
 
-this is an example for integerating muda-app. (about [muda](https://github.com/MuGdxy/muda))
+This is an example for integerating muda-app. (about [muda](https://github.com/MuGdxy/muda))
 
 ## Integrate MUDA
 
