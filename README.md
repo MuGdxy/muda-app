@@ -1,6 +1,20 @@
 # MUDA App
 
-This is an example for integerating muda-app. (about [muda](https://github.com/MuGdxy/muda))
+This is an example of integrating muda-app. (about [muda](https://github.com/MuGdxy/muda))
+
+The program just prints `hello muda` from GPU kernel. 
+
+The structure of the project is as following:
+
+```shell
+muda-app
+- src
+  - main.cpp
+  - hello_muda.cu
+  - hello_muda.h
+```
+
+We define the `hello muda` things in `hello_muda.cu` and export the function in a `hello_muda.h`  header. Thus we could use the function in a normal cpp program (in `main.cpp`).
 
 ## Integrate MUDA
 
@@ -10,19 +24,19 @@ Firstly, you need to pull MUDA.
 git submodule update --init
 ```
 
-which will be placed at `./submodules/muda/`
+The MUDA submodule will be placed at `./submodules/muda/`
 
 ### Xmake
 
-build scripts: [xmake.lua](./xmake.lua)
+Build scripts location: [xmake.lua](./xmake.lua)
 
-build:
+Build:
 
 ```shell
 $ xmake
 ```
 
-run:
+Run:
 
 ```shell
 $ xmake run
@@ -30,9 +44,9 @@ $ xmake run
 
 ### CMake
 
-build scripts: [CMakeLists.txt](./CMakeLists.txt)
+Build scripts location: [CMakeLists.txt](./CMakeLists.txt)
 
-build:
+Build:
 
 ```shell
 $ mkdir CMakeBuild
@@ -51,7 +65,7 @@ If you're going to copy and include muda headers, don't forget to add these comp
 -rdc=true                  // optional
 ```
 
-Example for xmake:
+Example for Xmake:
 
 ```lua
 add_cuflags("--extended-lambda")        
@@ -59,7 +73,7 @@ add_cuflags("--expt-relaxed-constexpr")
 add_cuflags("-rdc=true")
 ```
 
-Example for cmake:
+Example for Cmake:
 
 ```cmake
 target_compile_options(hello_muda PRIVATE
