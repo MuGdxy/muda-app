@@ -1,50 +1,73 @@
-# muda-app
+# MUDA App
 
-this is an example for muda-app. (about [muda](https://github.com/MuGdxy/muda))
+this is an example for integerating muda-app. (about [muda](https://github.com/MuGdxy/muda))
 
+## Integrate MUDA
 
+Firstly, you need to pull MUDA.
 
-1. add the repository of muda package to your xrepo (muda has not been in the xrepo official repo yet, so now we still need to add our own repo to contain the muda package):
+```shell
+git submodule update --init
+```
 
-    ```shell
-    $ xrepo add-repo muda-repo https://github.com/MuGdxy/xmake-repo
-    ```
+which will be placed at `./submodules/muda/`
 
-2. install muda:
+### Xmake
 
-    ```shell
-    $ xrepo install muda
-    ```
+build scripts: [xmake.lua](./xmake.lua)
 
-3. build muda-app:
+build:
 
-    ```shell
-    $ xmake
-    ```
+```shell
+$ xmake
+```
 
-4. run muda-app:
+run:
 
-    ```shell
-    $ xmake run
-    hello muda!
-    ```
+```shell
+$ xmake run
+```
 
-## integrate muda
+### CMake
 
-in xmake.lua:
+build scripts: [CMakeLists.txt](./CMakeLists.txt)
+
+build:
+
+```shell
+$ mkdir CMakeBuild
+$ cd CMakeBuild
+$ cmake -S ..
+$ cmake --build .
+```
+
+### Copy Headers
+
+If you're going to copy and include muda headers, don't forget to add these compile flags:
+
+```
+--extended-lambda          // must be set for muda
+--expt-relaxed-constexpr   // must be set for muda
+-rdc=true                  // optional
+```
+
+Example for xmake:
 
 ```lua
-add_rules("mode.debug", "mode.release")
-
-add_requires("muda",{ optional = false })
-set_languages("c++17")
-target("use_muda")
-    add_includedirs("src")
-    set_kind("binary")
-    add_files("src/*.cu")
-    add_packages("muda")
-    add_cuflags("--extended-lambda") -- must be set for muda
-    add_cuflags("--expt-relaxed-constexpr") -- must be set for muda
-target_end()
+add_cuflags("--extended-lambda")        
+add_cuflags("--expt-relaxed-constexpr") 
+add_cuflags("-rdc=true")
 ```
+
+Example for cmake:
+
+```cmake
+target_compile_options(hello_muda PRIVATE
+  $<$<COMPILE_LANGUAGE:CUDA>:--expt-relaxed-constexpr>
+  $<$<COMPILE_LANGUAGE:CUDA>:--extended-lambda>
+  $<$<COMPILE_LANGUAGE:CUDA>:-rdc=true>
+)
+```
+
+
 

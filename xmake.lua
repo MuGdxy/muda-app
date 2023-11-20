@@ -8,8 +8,6 @@ target("hello_muda")
     add_includedirs("src")
     add_deps("muda")
     set_kind("binary")
-    add_files("src/*.cu")
-    add_cuflags("--extended-lambda") -- must be set for muda
-    add_cuflags("--expt-relaxed-constexpr") -- must be set for muda
+    add_files("src/*.cu", "src/*.cpp")
     add_cugencodes("compute_75")
 target_end()
