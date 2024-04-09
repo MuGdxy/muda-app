@@ -8,13 +8,26 @@ add_subdirectory("submodules/muda")
 set(CMAKE_CUDA_ARCHITECTURES 75)
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(hello_muda)
-set_target_properties(hello_muda PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+find_package(Eigen3 REQUIRED)
 
-target_link_libraries(hello_muda PRIVATE muda)
+file(GLOB CU_SOURCE CONFIGURE_DEPENDS "src/*.cu")
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS "src/*.h" "src/*.hpp" "src/*.cuh")
+set(COMMON_SOURCE 
+    "src/main.cpp"
+    "src/program/program.cu"
+)
 
-file(GLOB_RECURSE HELLO_MUDA_CU_SOURCE CONFIGURE_DEPENDS "src/*.cu")
-target_sources(hello_muda PRIVATE ${HELLO_MUDA_CU_SOURCE})
+# for every .cu file in "./src", create a target
+foreach(CU_FILE ${CU_SOURCE})
+    get_filename_component(FILE_NAME ${CU_FILE} NAME)
+    string(REPLACE ".cu" "" TARGET_NAME ${FILE_NAME})
+    add_executable(${TARGET_NAME})
+    target_sources(${TARGET_NAME} PRIVATE ${CU_FILE} ${COMMON_SOURCE} ${HEADER_FILES})
+    set_target_properties(${TARGET_NAME} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+    target_link_libraries(${TARGET_NAME} PRIVATE muda)
+    target_include_directories(${TARGET_NAME} PRIVATE "src")
+    target_link_libraries(${TARGET_NAME} PRIVATE Eigen3::Eigen)
+    message(STATUS "add target: ${TARGET_NAME}")
+endforeach()
 
-file(GLOB_RECURSE HELLO_MUDA_CPP_SOURCE CONFIGURE_DEPENDS "src/*.cpp")
-target_sources(hello_muda PRIVATE ${HELLO_MUDA_CPP_SOURCE})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${COMMON_SOURCE} ${CU_SOURCE} ${HEADER_FILES})

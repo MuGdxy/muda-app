@@ -1,6 +1,7 @@
-#include "hello_muda.h"
+#include <program/internal.h>
 
 int main() {
-	hello_muda();
+    Program program;
+    program.main();
 	return 0;
 }
