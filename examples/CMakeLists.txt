@@ -1,0 +1,2 @@
+add_subdirectory(hello_muda)
+add_subdirectory(add_vec)
