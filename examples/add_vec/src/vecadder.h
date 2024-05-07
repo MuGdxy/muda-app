@@ -14,8 +14,8 @@ public:
     std::vector<float> get();
 
 private:
-    // VecAdder类的实现细节放置在该前向声明的实现类中。
+    // The implementation details of the VecAdder class are placed in the implementation class declared here.
     struct Impl;
-    // 指向实现类Impl的私有指针
+    // The private pointer to the implementation class Impl
     std::unique_ptr<Impl> pimpl_;
 };
