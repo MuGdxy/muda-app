@@ -8,4 +8,9 @@ add_subdirectory("submodules/muda")
 set(CMAKE_CUDA_ARCHITECTURES 75)
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(examples)
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.cu" "src/*.h")
+add_executable(hello_muda ${SOURCES})
+
+target_link_libraries(hello_muda PRIVATE muda)
+
+set_target_properties(hello_muda PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
