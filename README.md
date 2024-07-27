@@ -32,3 +32,6 @@ $ cmake --build . --config Debug
 
 - Windows
   -  MSVC 19.39.33522.0/CUDA 12.3.52
+
+- Linux
+  -  GNU 11.4.0/CUDA12.4.131
