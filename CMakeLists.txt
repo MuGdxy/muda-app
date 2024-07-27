@@ -11,8 +11,8 @@ set(CMAKE_CUDA_ARCHITECTURES 75)
 set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.cu" "src/*.h")
-add_executable(hello_muda ${SOURCES})
+add_executable(hello_muda_linear_system ${SOURCES})
 
-target_link_libraries(hello_muda PRIVATE muda Eigen3::Eigen cublas cusparse cusolver)
+target_link_libraries(hello_muda_linear_system PRIVATE muda Eigen3::Eigen cublas cusparse cusolver)
 
-set_target_properties(hello_muda PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+set_target_properties(hello_muda_linear_system PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
