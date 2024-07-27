@@ -1,30 +1,20 @@
-# MUDA App
+# MUDA Linear System
 
-This is an example of integrating muda-app. (about [muda](https://github.com/MuGdxy/muda))
+This is an example of using muda linear system. (about [muda](https://github.com/MuGdxy/muda))
 
-The program just prints `hello muda` from GPU kernel. 
+## Requirement
 
-The structure of the project is as following:
-
-```shell
-muda-app
-- src
-  - main.cpp
-  - hello_muda.cu
-  - hello_muda.h
-```
-
-We define the `hello muda` things in `hello_muda.cu` and export the function in a `hello_muda.h`  header. Thus we could use the function in a normal cpp program (in `main.cpp`).
-
-## Integrate MUDA
-
-Firstly, you need to pull MUDA.
+You should install `Eigen3` by yourself.
 
 ```shell
-git submodule update --init
+$ vcpkg install eigen3
 ```
 
-The MUDA submodule will be placed at `./submodules/muda/`
+And pull `muda` submodule
+
+```shell
+$ git submodule update --init
+```
 
 ### CMake
 
@@ -38,4 +28,7 @@ $ cmake -S .. -B . -DCMAKE_BUILD_TYPE=Debug
 $ cmake --build . --config Debug
 ```
 
+### Tested
 
+- Windows
+  -  MSVC 19.39.33522.0/CUDA 12.3.52
